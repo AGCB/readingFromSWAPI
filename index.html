@@ -19,7 +19,7 @@ I have heavily commented the planet request as note-taking.
 let myPlanetRequest = (planetValue=1) => {
 //starting a new XHR 
 let myRequest = new XMLHttpRequest(); 
-//we create the URL using the initial parament value	
+//we create the URL using the initial parameter value	
 let relevantURL = 'https://swapi.co/api/planets/' + planetValue;
 //opening a get request from the SWAPI url.	
 myRequest.open('GET', relevantURL) 
@@ -28,7 +28,7 @@ myRequest.onload = () => {
 	//save the response text as a local variable myData. Be sure to save it 
 	//as JSON data. responseText is the keyword that the data will come in under
 	var myData = JSON.parse(myRequest.responseText); 
-	//log to the console our data. I have string concated a small statement
+	//log out our data as a string concated as a small statement
 	//just to show something slightly more human readable.
 	console.log('The planet ' + myData.name + ' has a population of ' + myData.population + '. It would be described as ' + myData.terrain)
 };

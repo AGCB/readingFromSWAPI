@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>swapi test</title>
+</head>
+<body>
+ <button id="btn">Click Me!</button> 
+<script>
+//in this example I create a button on the page
+//and attach the XHR request to it through an AddEventListener.
+var btn = document.getElementById('btn');
+btn.addEventListener('click', () => {
+
+  let myPlanetRequest = (planetValue=1) => {
+  let myRequest = new XMLHttpRequest(); 	
+  let relevantURL = 'https://swapi.co/api/planets/' + planetValue;
+  myRequest.open('GET', relevantURL) 
+  myRequest.onload = () => { 
+	var myData = JSON.parse(myRequest.responseText); 
+	console.log('The planet ' + myData.name + ' has a population of ' + myData.population + '. It would be described as ' + myData.terrain)
+  };
+  myRequest.send();
+  }
+
+  let mySpeciesRequest = (speciesValue= 27) => {
+  let myRequest = new XMLHttpRequest();
+  let relevantURL = 'https://swapi.co/api/species/' + speciesValue;
+  myRequest.open('GET', relevantURL);
+  myRequest.onload = () => {
+  	var myData = JSON.parse(myRequest.responseText); 
+    console.log('The species ' + myData.name + ' are considered  ' + 
+      myData.classification + ' and have  ' + myData.skin_colors + ' colored skin.');
+  };
+  myRequest.send();
+}
+
+myPlanetRequest(17)
+mySpeciesRequest(8)
+}); //closing the addEventListener
+console.log(42)
+
+
+</script>	
+
+
+</body>
+</html>

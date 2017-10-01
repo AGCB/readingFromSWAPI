@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>swapi test</title>
+</head>
+<body>
+<script>
+/*this is a test of getting information from an external API 
+I'm using the star wars API .
+We have a planet request and a species request.
+I have heavily commented the planet request as note-taking.
+
+*/	
+
+//I start by wrapping my request code in a function myPlanetRequest.
+//it will take a single number representing a unique planet.
+// default is set to Tattooine AKA 1.
+let myPlanetRequest = (planetValue=1) => {
+//starting a new XHR 
+let myRequest = new XMLHttpRequest(); 
+//we create the URL using the initial parament value	
+let relevantURL = 'https://swapi.co/api/planets/' + planetValue;
+//opening a get request from the SWAPI url.	
+myRequest.open('GET', relevantURL) 
+//onload function to run once the data has been returned
+myRequest.onload = () => { 
+	//save the response text as a local variable myData. Be sure to save it 
+	//as JSON data. responseText is the keyword that the data will come in under
+	var myData = JSON.parse(myRequest.responseText); 
+	//log to the console our data. I have string concated a small statement
+	//just to show something slightly more human readable.
+	console.log('The planet ' + myData.name + ' has a population of ' + myData.population + '. It would be described as ' + myData.terrain)
+};
+//the onload function alone can't get the job done. 
+//the following line actually sends the request.
+myRequest.send();
+}
+
+/*the above has been tailored for the planets data, but 
+  SWAPI can also give back spaceships, vehicles, people, films, and species
+  Below is an example tailored for searching species information.
+*/
+let mySpeciesRequest = (speciesValue= 27) => {
+  let myRequest = new XMLHttpRequest();
+  let relevantURL = 'https://swapi.co/api/species/' + speciesValue;
+  myRequest.open('GET', relevantURL);
+  myRequest.onload = () => {
+  	var myData = JSON.parse(myRequest.responseText); 
+    console.log('The species ' + myData.name + ' are considered  ' + 
+      myData.classification + ' and have  ' + myData.skin_colors + ' colored skin.');
+  };
+  myRequest.send();
+}
+//I wrap my API calls in setTimeoutZeros to keep it off of the callstack
+//until other code is run. Thanks to Philip Roberts and Will Sentance for 
+//giving great explanations of this concept.
+//If anyone is unclear about JS CallStack, WebAPIs, Callback Queue, and Event
+//loop, I recommend JS the Hard Parts and What the Heck is the Event Loop Anyway
+setTimeout(()=>{
+myPlanetRequest(17)
+mySpeciesRequest(7)
+},0)
+
+console.log(42 + " other code goes here")
+</script>	
+
+</body>
+</html>
